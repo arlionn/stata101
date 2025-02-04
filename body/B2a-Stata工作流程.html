@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.39">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>B2a. Stata 工作流程 – Stata 101</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../body/B2b-profile文档.html" rel="next">
+<link href="../body/B1-Stata界面.html" rel="prev">
+<link href="../images/lianxh-logo-sq-40.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-b857c20f0474e0ffbcb4f42802ea7d5c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../body/B0-Stata概览.html">Stata 入门</a></li><li class="breadcrumb-item"><a href="../body/B2a-Stata工作流程.html"><span class="chapter-title">B2a. Stata 工作流程</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="https://book.lianxh.cn/stata101/index.html" class="sidebar-logo-link">
+      <img src="../images/lianxh-logo-sq-30.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../"></a><a href="../index.html">Stata 101</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://www.lianxh.cn" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-house-fill"></i></a>
+    <a href="https://lianxh-class.cn/" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-camera-video-fill"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Stata 101</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../body/_home.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">About</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Stata 入门</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../body/B0-Stata概览.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">B0. Stata 概览</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../body/B1-Stata界面.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">B1. Stata 界面和菜单</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../body/B2a-Stata工作流程.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">B2a. Stata 工作流程</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../body/B2b-profile文档.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">B2b. profile 文档：启动时自动执行的命令</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../body/B3-Stata语法格式.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">B3. Stata 命令的语法格式</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../body/B4-帮助文件和外部命令.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">B4. 帮助文件和外部命令</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../body/B5-Stata变量名称.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">B5. Stata中的变量名称</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../body/B6-do文档-dofile.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">B6. do 文档</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../body/B7_Stata函数功能-需要修改完善.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">B7. Stata 中的函数功能</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">数据处理</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../body/D1-数据导入和导出.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">D1. 数据的导入与导出</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../body/D2-资料的合并与追加.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">D2. 资料的合并与追加</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../body/D3-缺漏值.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">D3. 缺漏值的处理</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../body/D4-离群值.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">D4. 离群值的处理</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../body/D5-egen函数.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">D5. egen 系列函数</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../body/D6_类别变量和分组统计.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">D6. 类别变量和分组统计</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../body/D7-赫芬达尔指数.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">D7. HHI-赫芬达尔指数</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">回归分析</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../body/G1-Stata绘图概览.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">G1. Stata 绘图概览</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../body/G2 折线图和连线图.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">G2. 折线图和连线图</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../body/G3-直方图.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">G3. 直方图</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../body/G4-函数图.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">G4. 函数图</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">程序初步</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../body/P1-单值.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">P1. 单值</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../body/P2-暂元.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">P2. 暂元</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../body/P3-循环语句.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">P3. 循环语句</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../body/P4-ado文档-定义自己的程序.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">P4. ado 文档：定义自己的程序</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../body/P5_随机抽样.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">P5. 随机抽样</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">回归分析</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../body/R1-OLS简介.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">R1. OLS简介</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../body/R2-相关系数矩阵.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">R2. 相关系数矩阵</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../body/R3-基本统计量的呈现.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">R3. 基本统计量的呈现</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../body/R4-组间均值差异检验.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">R4. 组间均值差异检验</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../body/R5-基本统计量和相关系数的输出.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">R5. 统计表格输出为 Excel/Word</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../body/R6-拟合值和残差.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">R6. 拟合值和残差</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../body/R7-稳健型标准误.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">R7. 稳健型标准误的获取</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../body/R8-平方项.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">R8. 平方项——特殊的交叉项</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../body/R9-回归结果的呈现和输出.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">R9. 回归结果的呈现和输出</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>面板数据</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../body/XT1_面板数据模型简介.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">XT1. 面板数据模型简介</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../body/XT2_FE和RE模型.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">XT2. FE 和 RE 模型</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../body/XT3_Hausman检验.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">XT3. Hausman 检验</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#工作流程概览" id="toc-工作流程概览" class="nav-link active" data-scroll-target="#工作流程概览">1. 工作流程概览</a></li>
+  <li><a href="#stata-安装路径和个人文件夹的设置" id="toc-stata-安装路径和个人文件夹的设置" class="nav-link" data-scroll-target="#stata-安装路径和个人文件夹的设置">2. Stata 安装路径和个人文件夹的设置</a>
+  <ul class="collapse">
+  <li><a href="#stata-17-目录下的文档结构" id="toc-stata-17-目录下的文档结构" class="nav-link" data-scroll-target="#stata-17-目录下的文档结构">2.1 Stata 17 目录下的文档结构</a></li>
+  <li><a href="#个人文件夹的文档结构" id="toc-个人文件夹的文档结构" class="nav-link" data-scroll-target="#个人文件夹的文档结构">2.2 个人文件夹的文档结构</a></li>
+  </ul></li>
+  <li><a href="#工作路径-working-directory" id="toc-工作路径-working-directory" class="nav-link" data-scroll-target="#工作路径-working-directory">3. 工作路径 (Working Directory)</a></li>
+  <li><a href="#stata执行命令和工作机制" id="toc-stata执行命令和工作机制" class="nav-link" data-scroll-target="#stata执行命令和工作机制">4. Stata：执行命令和工作机制</a>
+  <ul class="collapse">
+  <li><a href="#机制-1把数据和程序拖入内存中" id="toc-机制-1把数据和程序拖入内存中" class="nav-link" data-scroll-target="#机制-1把数据和程序拖入内存中">4.1 机制 1：把数据和程序拖入内存中</a></li>
+  <li><a href="#机制-2结果呈现和输出" id="toc-机制-2结果呈现和输出" class="nav-link" data-scroll-target="#机制-2结果呈现和输出">4.2 机制 2：结果呈现和输出</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../body/B0-Stata概览.html">Stata 入门</a></li><li class="breadcrumb-item"><a href="../body/B2a-Stata工作流程.html"><span class="chapter-title">B2a. Stata 工作流程</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-title">B2a. Stata 工作流程</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="工作流程概览" class="level2">
+<h2 class="anchored" data-anchor-id="工作流程概览">1. 工作流程概览</h2>
+<blockquote class="blockquote">
+<p>Source: 连玉君, 陈鑫梅, 2020, <a href="https://www.lianxh.cn/details/124.html">可重复性研究：如何保证你的研究结果可重现？</a>, 连享会 No.124.</p>
+</blockquote>
+<p>图 3 展示了一个典型的实证分析工作流程。你在本地或网盘中的文件夹中存如原始数据文件，然后在 Stata 中执行命令，以实现数据读入、清洗和分析，最后把结果输出成表格和图形，嵌入到 Word 或 TeX 文档中。</p>
+<p>简言之，我们要实现「<strong>数据 → 代码 → 结果 → 文档</strong>」的有机衔接，让研究流程清晰透明，也方便日后重复或更新分析。</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://fig-lianxh.oss-cn-shenzhen.aliyuncs.com/Stata_intro_Empirical_steps.png" class="img-fluid figure-img"></p>
+<figcaption>Stata 工作流程示意图</figcaption>
+</figure>
+</div>
+<blockquote class="blockquote">
+<p>图 3：Stata 工作流程示意图</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>左：本地文件夹</strong></p>
+</blockquote>
+<p>本地文件夹：<strong>D:/paper/myAER</strong>，其中包含三个文件夹和一个 dofile：</p>
+<ul>
+<li><strong>“./data0”</strong>：存放原始数据文件，如 <strong>data_org.xlsx</strong></li>
+<li><strong>“./dataClean”</strong>：存放清洗后的数据文件，如 <strong>data_clean.dta</strong></li>
+<li><strong>“./out”</strong>：存放输出结果，如回归表格 <strong>Table01.rtf</strong> 和图形 <strong>Fig01.png</strong></li>
+<li><code>dofile_myAER.do</code>：Stata do 文档，记录所有处理过程。</li>
+</ul>
+<p>采用这种分类管理方式，无论是查看数据源还是寻找输出文件，都能快速定位。与合作者分享论文复现资料时，也只需分享 <code>dofile_myAER.do</code> 和 “<strong>./data0</strong>” 子文件夹即可。合作者运行 <code>dofile_myAER.do</code> 后变会自动生成清洗后的数据文件和结果文档。</p>
+<blockquote class="blockquote">
+<p><strong>右：dofile</strong></p>
+</blockquote>
+<p>右上角打开的 <strong>dofile_myAER.do</strong> 是我们向 Stata 下达指令的脚本文件 (<code>dofile</code>)。具体解释如下：</p>
+<ul>
+<li>首先，使用 <code>global path "D:/paper/myAER"</code> 命令，指定了项目文件所在路径，并以此为基础定义了几个相对路径。在后续命令中，便可以使用 <code>$path</code>，<code>$data0</code> 等全局暂元来引用这些路径，而不必每次都手动输入完整路径。你的合作者只需酌情修改第 4 行的文件路径 (绝对路径)，而无需做其他更改。</li>
+<li>接下来，在 <code>dofile</code> 中写好一系列命令，以便完成数据导入、清洗、回归以及结果输出等一整套流程。有了 <code>dofile</code>，只需轻轻点一下执行按钮，就能让整套分析重复进行，也可以让修改和完善工作更有效率。</li>
+<li>dofile 中的第 15, 20 和 24 行都用于输出结果，分别将清洗后的中间数据，回归表格，以及生成的图形存储到项目文件夹 <strong>D:/paper/myAER</strong> 中的指定子文件中。随后你只需将这些表格和图形插入论文 Word 文档中即可。</li>
+</ul>
+<blockquote class="blockquote">
+<p><strong>中：Stata 主界面</strong></p>
+</blockquote>
+<p>在 Stata 的主界面中会呈现回归结果、显示输出的图片等。比如，</p>
+<ul>
+<li>执行 <code>reg price wei mpg, robust</code> 命令后，可以在 Stata 的结果窗口查看回归结果</li>
+<li>进一步执行 <code>esttab using "$path/out/Table01.rtf", replace</code> 命令时，结果窗口中会显示自动输出的 <strong>.rtf</strong> 文档 (等同于 word 文档) 的存储路径 (单击蓝色链接可以打开此文档)。</li>
+<li>执行第 22-23 行的命令后，就会绘制散点图，并将图片以 <strong>.png</strong> 格式存储到 <code>$out</code> 文件夹中。</li>
+</ul>
+<blockquote class="blockquote">
+<p><strong>小结</strong></p>
+</blockquote>
+<p>总之，dofile 就像一个中心控制台：我们在 dofile 中下达命令，以便从指定路径中导入 Excel, txt, dta 等格式的数据文件，进而进行统计和回归分析，并最终将输出的图形、表格等结果保存到指定文件夹中，以便随后插入 Word, TeX 等写作文档中。</p>
+</section>
+<section id="stata-安装路径和个人文件夹的设置" class="level2">
+<h2 class="anchored" data-anchor-id="stata-安装路径和个人文件夹的设置">2. Stata 安装路径和个人文件夹的设置</h2>
+<p>安装 Stata 时，文件路径中尽量不要包含中文、空格和特殊字符。否则，会导致涉及读写或保存文档的程序无法运行。我个人通常将 Stata 安装在 D 盘根目录下，如 <strong>D:/stata17</strong>。</p>
+<p>我会在 D 盘中另外建立一个文件夹 <strong>D:/stata</strong>，其中，</p>
+<ul>
+<li>新建 <strong>personal</strong> 文件夹，用以保存我自己的数据和程序文件；</li>
+<li>新建 <strong>plus</strong> 文件夹，用以存放外部命令。</li>
+</ul>
+<p>这样做的好处是，无论 Stata 更新到哪个版本，我个人的文件都不会受到任何影响。例如，更新到 Stata 18 后，我只需将 <strong>D:/stata17/profile.do</strong> 文档复制到 <strong>D:/stata18</strong> 目录下即可。</p>
+<section id="stata-17-目录下的文档结构" class="level3">
+<h3 class="anchored" data-anchor-id="stata-17-目录下的文档结构">2.1 Stata 17 目录下的文档结构</h3>
+<p>Stata 安装目录 <code>D:/stata17/</code> 的文档结构如下：</p>
+<pre class="dos"><code>D:/stata17:: 
+                             --- 解释 ---
+├── ado
+│   └── base           |  Stata 官方提供的程序文件（按 _, A-Z 分类）
+├── docs               |  Stata 电子手册（PDF 格式），便于查阅
+└── utilities          |  包含 JAVA、Python 等插件和工具
+│  profile.do          |  Stata 启动时自动执行该文件中的命令
+│  mp-64.dll           |  Stata 运行所需的动态链接库文件
+│  STATA.LIC           |  Stata 的许可证文件，用于验证软件合法性
+│  StataMP-64.exe      |  Stata 的主执行文件，用于启动程序
+│  StataMP-64_old.exe  |  旧版本的 Stata 执行文件（备份或兼容用途）</code></pre>
+<p><strong>说明如下：</strong></p>
+<ul>
+<li>不要随意修改 <code>ado/base</code> 目录中的文件，以免影响 Stata 的正常运行。</li>
+<li>可以通过编辑 <code>profile.do</code> 文件来定制 Stata 的启动行为，例如设置工作目录或加载常用脚本。后文会详细介绍。</li>
+<li>如果需要使用插件或外部工具，可以将相关文件放置在 <code>utilities</code> 目录中，确保路径正确。我们通常无需自行设定，再安装或关联外部插件时，Stata 会自动将相关文件存入此处。</li>
+</ul>
+</section>
+<section id="个人文件夹的文档结构" class="level3">
+<h3 class="anchored" data-anchor-id="个人文件夹的文档结构">2.2 个人文件夹的文档结构</h3>
+<p>存放我个人文档的目录 <code>D:/stata/</code> 的结构如下：</p>
+<pre class="dos"><code>D:/stata::
+                             --- 解释 ---
+├── personal           |  存放个人文档 (数据, dofiles 等)
+│   ├── data
+│   ├── paper
+│   └── ... 
+├── do                 |  存放自动生成的日志文件
+└── plus               |  存放外部命令</code></pre>
+<p><strong>说明如下：</strong></p>
+<ul>
+<li><strong>personal</strong> 目录下可以根据需要设定多个子文件夹，用于分类存储不同项目的文件。基本原则是，一个项目一个文件夹。</li>
+<li><strong>do</strong> 目录用于存放自动生成的日志文件 (log 文件)，记录 Stata 运行过程中的命令和输出结果，复现分析过程或排查问题。随后在 <strong>profile 文档</strong> 部分会有详细介绍。</li>
+<li><strong>plus</strong> 目录用于存放通过 <code>net install</code> 或 <code>ssc install</code> 等命令安装的外部命令 (ado 文件)。</li>
+</ul>
+<p>当然，你也可以酌情添加其他文件夹。</p>
+</section>
+</section>
+<section id="工作路径-working-directory" class="level2">
+<h2 class="anchored" data-anchor-id="工作路径-working-directory">3. 工作路径 (Working Directory)</h2>
+<p>在 Stata 主界面的右下角会显示当前 <strong>工作路径/目录（Working Directory）</strong>，是 Stata 默认的文件读取和保存位置。比如，执行 <code>use mydata.dta</code> 时，默认从当前工作目录下读取 <strong>mydata.dta</strong> 数据文件 (如果该目录下未保存 <strong>mydata.dta</strong> 文件，则 Stata 会报错)；执行 <code>save newdata.dta, replace</code> 时，<strong>newdata</strong> 文件会自动保存到当前工作目录下。</p>
+<p>要在结果窗口中显示当前工作路径，可以执行 <code>cd</code> 或 <code>pwd</code> 命令。若需切换工作路径，只需在 <code>cd</code> (_c_hange _d_irectory) 命令后写上新的工作路径名称即可，例如 <code>cd "D:/Projects/SJ_paper"</code> (注意：必须是已经存在的文件夹路径)。合理设置工作目录不仅能减少重复输入路径的麻烦，还能让文件管理更加清晰高效，是 Stata 使用中的一项基础但重要的操作。</p>
+</section>
+<section id="stata执行命令和工作机制" class="level2">
+<h2 class="anchored" data-anchor-id="stata执行命令和工作机制">4. Stata：执行命令和工作机制</h2>
+<p>我们可以通过三种方式与 Stata 互动：</p>
+<ul>
+<li>点击菜单 (新手适用，老手偶尔为之)</li>
+<li>命令窗口 (简单的测试性任务)</li>
+<li>dofile (主要方式)</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://fig-lianxh.oss-cn-shenzhen.aliyuncs.com/Stata_intro_three_methods_excute_cmd_001.png" class="img-fluid figure-img"></p>
+<figcaption>Stata 命令的三种执行方式</figcaption>
+</figure>
+</div>
+<section id="机制-1把数据和程序拖入内存中" class="level3">
+<h3 class="anchored" data-anchor-id="机制-1把数据和程序拖入内存中">4.1 机制 1：把数据和程序拖入内存中</h3>
+<p>初学者很怕见到 <code>clear</code> 命令。事实上，如果你了解 Stata 的运行机制，就会明白，<code>clear</code> 是一个非常安全的命令。具体说明如下：</p>
+<p>启动 Stata 时，电脑会分配给 Stata 一块 <strong>内存空间</strong> (一座<strong>大房子</strong>)。解读如下：</p>
+<ul>
+<li>当我们执行 <code>use D:/myData/auto.dta</code> 命令时，Stata 会把存储于 <strong>D:/myData</strong> 文件夹中的 <code>auto.dta</code> 文件复制 (copy) 一份，读入内存。随后，执行 <code>sum</code>, <code>reg</code> 等命令时，Stata 都是从内存中读取这个副本数据，而无需再访问硬盘中的数据文件，即 <code>D:/myData/auto.dta</code>。这样的好处是，可以大幅提高运算速度。缺陷在于，但计算机可以分配给 Stata 的内存空间有限时，Stata 会因为无法读入大文件，或运行中出现卡顿现象。</li>
+<li>Stata 执行程序时也采用了上述逻辑。当我们执行 <code>tabstat var1</code> 时，Stata 会先到 <strong>D:/stata17/base/t/</strong> 文件夹下找到名为 <code>tabstat.ado</code> 的程序文件，进而将其读入内存中再执行。当我们再次执行 <code>tabstat var2</code> 时，Stata 会直接从内存中执行 <code>tabstat.ado</code> 副本，而无需再访问硬盘的原始程序文件，即 <strong>D:/stata17/base/t/tabstat.ado</strong>。</li>
+</ul>
+<p>Stata 会把「<strong>大房子</strong>」分成若干个小房间，分类存储 <strong>Data, Matrix, 返回值, 程序</strong> 等对象。若想清空某个「小房间」，可以使用 <code>clear 房间类型</code> 命令，例如：</p>
+<ul>
+<li><code>clear</code>：清空内存中的数据 (分配给 Stata 的内存中的 <strong>【Data】</strong> 那一块空间)</li>
+<li><code>clear matrix</code>：清空内存中的矩阵对象</li>
+<li><code>clear results</code>：清空内存中的返回值，如 <code>r(mean)</code>, <code>r(N)</code>, <code>e(r2)</code> 等</li>
+<li><code>clear all</code>：清空分配给 Stata 的所有内存空间</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://fig-lianxh.oss-cn-shenzhen.aliyuncs.com/stata-intro-clear-001.png" class="img-fluid figure-img"></p>
+<figcaption>stata-intro-clear-001</figcaption>
+</figure>
+</div>
+<p>有关 <code>clear</code> 命令的详情，请参阅 <code>help clear</code>，或 <a href="https://www.stata.com/manuals/dclear.pdf"><strong>[D]</strong> clear</a>。</p>
+<p>作为例子，我们来解释一下如下命令的的含义：</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="st">"D:/myData/auto.dta"</span>, <span class="kw">clear</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>上述命令等价于：</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">clear</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="st">"D:/myData/auto.dta"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>也就说，虽然 <code>clear</code> 选项置于命令的末尾，但却是最先被执行的，它会清空内存中已有的数据文件。然后，Stata 从硬盘 (<strong>D:/myData/</strong>) 中拷贝 <strong>auto.dta</strong> 文件，并将该副本读入内存。</p>
+</section>
+<section id="机制-2结果呈现和输出" class="level3">
+<h3 class="anchored" data-anchor-id="机制-2结果呈现和输出">4.2 机制 2：结果呈现和输出</h3>
+<p>当我们按下图的方式执行 <code>sum price</code> 命令后，Stata 会同时以两种方式输出结果：</p>
+<ul>
+<li><strong>方式 1</strong>：将部分结果直接呈现于 <strong>结果窗口</strong>，通常会以特定的格式排列，可读性强。</li>
+<li><strong>方式 2</strong>：所有计算结果都会存入 <strong>内存</strong> (按类别存入不同的 <strong>房间</strong>)。
+<ul>
+<li>这些结果统称为返回值 (return values)。对于 <code>sum</code>, <code>tabstat</code> 等命令，可以使用 <code>return list</code> 命令显示之；对于 <code>regress</code>, <code>logit</code>, <code>xtreg</code> 等回归类命令，可以使用 <code>ereturn list</code> 命令显示之。</li>
+<li>这些结果可以被后续代码调用，如 <code>gen x_mean = r(mean)</code></li>
+<li>也可以借助 <code>esttab</code>, <code>outreg2</code>, <code>reg2docx</code> 等命令调用后，输出到 Word 等文档中。</li>
+</ul></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://fig-lianxh.oss-cn-shenzhen.aliyuncs.com/stata-intro-clear-return-001.png" class="img-fluid figure-img"></p>
+<figcaption>Stata 的返回值机制</figcaption>
+</figure>
+</div>
+<p>简言之，你在 Stata 结果窗口中看到的只是一部分结果，这些结果以及其他相关结果都会被分门别类地存储在内存中，以便其他程序调用。如此以来，我们就可以让多个程序合作，采用「接力」的方式完成复杂的分析任务。</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/book\.lianxh\.cn\/stata101\/index\.html");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../body/B1-Stata界面.html" class="pagination-link" aria-label="B1. Stata 界面和菜单">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">B1. Stata 界面和菜单</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../body/B2b-profile文档.html" class="pagination-link" aria-label="B2b. profile 文档：启动时自动执行的命令">
+        <span class="nav-page-text"><span class="chapter-title">B2b. profile 文档：启动时自动执行的命令</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p><a href="https://www.lianxh.cn">www.lianxh.cn</a></p>
+</div>
+    <div class="nav-footer-right">
+<p>Support: <a href="https://quarto.org/">Quarto</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
