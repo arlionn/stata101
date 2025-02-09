@@ -1,21 +1,14 @@
-# stata101
+# Stata101
 
 Introduction of Stata, in Chenese. 
 
-> [Read the Book](https://book.lianxh.cn/stata101/index.html)
-
-<br>
 <br>
 
+> &#x1F34E; [Read the Book](https://book.lianxh.cn/stata101/index.html)
 
-```{=html}
-<div  style="margin: 20px; text-align: left;">
-<a class="btn btn-primary" href="https://www.lianxh.cn" role="button" target="_blank" style="padding: 10px 20px;">连享会主页</a>
-<a class="btn btn-primary" href="https://www.lianxh.cn/details/17.html" role="button" target="_blank" style="padding: 10px 20px;">课程</a>
-<a class="btn btn-primary" href="https://lianxh-class.cn/" role="button" target="_blank" style="padding: 10px 20px;">视频</a>
-<a class="btn btn-primary" href="https://www.lianxh.cn/share.html" role="button" target="_blank" style="padding: 10px 20px;">资料</a>
-</div>
-```
+<br>
+
+---
 
 - 课件下载：[Click](https://www.lianxh.cn/details/1095.html)
 
